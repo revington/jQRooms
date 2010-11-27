@@ -15,12 +15,14 @@
             'occupationRemove': function() { }
         };
 
+        function printForm() { return "<p>the form</p>"; };
+
         if (options) {
             $.extend(settings, options);
         }
 
-
-
-
+        return this.each(function(i, el) {
+            $(this).html(printForm());
+        });
     };
 })(jQuery);
