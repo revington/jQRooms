@@ -1,15 +1,27 @@
 <html>
-	<head>
-	<title>occform plugin example</title>
-	<script type="text/javascript" src="scripts/jquery-1.4.4.js"></script>
-	    <script type="text/javascript" src="../src/occform.js"></script>
-	    <script type="text/javascript">
-	        $(function() {
-	            $("#occupation").occform();
-	        });
-	    </script>
-	</head>
-	<body>
-	<div id="occupation"></div>
-	</body>
+<head>
+    <title>rooms plugin example</title>
+
+    <script type="text/javascript" src="scripts/jquery-1.4.4.js"></script>
+
+    <script type="text/javascript" src="../src/rooms.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#rooms").rooms();
+        });
+    </script>
+
+</head>
+<body>
+    <div id="occupation">
+        Rooms
+        <select name="rooms" id="rooms">
+            <option selected="selected">1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+    </div>
+</body>
 </html>
