@@ -1,6 +1,6 @@
 ﻿(function($) {
     $.fn.rooms = function(options) {
-        
+
         var settings = {
             'min_adults': 1,
             'max_adults': 4,
@@ -23,6 +23,18 @@
                 } }]
             };
 
+            function randomID(size) {
+                var str = "",
+                chars = "0123456789abcdefghijklmnopqurstuvwxyz",
+                randomChar = function() { return Math.floor(Math.random() * 39); }
+
+                while (size--) {
+                    str += chars.substr(randomChar(), 1);
+                }
+                
+                return str;
+            }
+            
             if (options) {
                 $.extend(settings, options);
             }
@@ -112,7 +124,7 @@
 
                 var adults = htmlTag("label", settings.adults_label + htmlSelect("adult-pax", settings.min_adults, settings.max_adults, countAdults(room)));
                 var childrenHTML = htmlTag("label", settings.children_label + htmlSelect("children", settings.min_children, settings.max_children, allChildren.length));
-                
+
                 return adults +
                         childrenHTML +
                         "<ul>" +
@@ -133,22 +145,7 @@
                 return htmlRooms + serializedRooms;
             };
 
-            function getRandomNumber(range) {
-                return Math.floor(Math.random() * range);
-            }
 
-            function getRandomChar() {
-                var chars = "0123456789abcdefghijklmnopqurstuvwxyz";
-                return chars.substr(getRandomNumber(39), 1);
-            }
-
-            function randomID(size) {
-                var str = "";
-                for (var i = 0; i < size; i++) {
-                    str += getRandomChar();
-                }
-                return str;
-            }
 
             return this.each(function(i, el) {
                 var $this = $(this), data = {
@@ -178,7 +175,7 @@
                     $(this).parents("fieldset").find("select[name='child-pax']").each(function() {
                         currentAges.push($(this).val());
                     });
-                    
+
                     for (var i = 0; i < desired_childrens; i++) {
                         newAges.push(currentAges[i] || settings.min_child_age);
                     }
