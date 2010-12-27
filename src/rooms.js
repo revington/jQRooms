@@ -14,6 +14,7 @@
             'default_room': ["a", "a"],
             'adults_label': 'adults',
             'children_label': 'children',
+            'child_label': 'child age',
             'serializers': [{
                 name: 'def',
                 fn: function(rooms) {
@@ -23,20 +24,20 @@
                 } }]
             };
 
+            if (options) {
+                $.extend(settings, options);
+            }
+
             function randomID(size) {
                 var str = "",
                 chars = "0123456789abcdefghijklmnopqurstuvwxyz",
-                randomChar = function() { return Math.floor(Math.random() * 39); }
+                randomChar = function() { return Math.floor(Math.random() * 39); };
 
                 while (size--) {
                     str += chars.substr(randomChar(), 1);
                 }
-                
+
                 return str;
-            }
-            
-            if (options) {
-                $.extend(settings, options);
             }
 
             function update_rooms(rooms_data, upTo) {
@@ -76,7 +77,6 @@
                 return ret;
             }
 
-
             function htmlTag(tag, content, attributes) {
                 var serialized_attributes = '';
 
@@ -108,7 +108,7 @@
             }
 
             function countAdults(room) {
-                return $.grep(room, function(val) { return val == "a" }).length;
+                return $.grep(room, function(val) { return val == "a"; }).length;
             }
 
             function countChildren(room) {
@@ -116,7 +116,7 @@
             }
 
             function extract_children(room) {
-                return $.grep(room, function(val) { return val !== "a" });
+                return $.grep(room, function(val) { return val !== "a"; });
             }
 
             function roomSerializer(room) {
@@ -130,7 +130,7 @@
                         "<ul>" +
 
                         $.map(allChildren, function(a) {
-                            return htmlTag("li", htmlSelect("child-pax", settings.min_child_age, settings.max_child_age, a));
+                            return htmlTag("li", htmlTag("label", settings.child_label + htmlSelect("child-pax", settings.min_child_age, settings.max_child_age, a)));
                         }).join("") +
                         "</ul>";
             }
@@ -143,9 +143,7 @@
                     return serializer.fn(rooms);
                 }).join("");
                 return htmlRooms + serializedRooms;
-            };
-
-
+            }
 
             return this.each(function(i, el) {
                 var $this = $(this), data = {
@@ -183,7 +181,7 @@
                     var theList = $(this).parents("fieldset").find("ul");
                     theList.children().remove();
                     theList.html($.map(newAges, function(val) {
-                        return htmlTag("li", htmlSelect("child-pax", settings.min_child_age, settings.max_child_age, val || settings.min_child_age));
+                        return htmlTag("li", htmlTag("label", settings.child_label + htmlSelect("child-pax", settings.min_child_age, settings.max_child_age, val || settings.min_child_age)));
                     }).join(""));
                 });
 
